@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini Finance Dashboard</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link href="bootstrap-icons.css" rel="stylesheet" />
+    <link href="main.css" rel="stylesheet" />
+    <link href="main.js" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="header-bar">
+      <div class="brand-section">
+        <div class="logo">
+          <div class="nav-logo">
+            <i class="fa-solid fa-cube"></i>
+          </div>
+          <p class="he">MiniFinanace</p>
+        </div>
+      </div>
+
+      <form class="search-form" action="#" method="get">
+        <input type="text" name="search" placeholder="Search" />
+      </form>
+
+      <div class="bar">
+        <div class="header-actions">
+          <div class="Logo-bell">
+            <a href="javascript:void(0);" onclick="openModal()" id="notificationBell">
+              <i class="fa-solid fa-bell" style="color: white;"></i>
+            </a>
+            <div id="notificationModal" class="modal">
+              <div class="modal-content">
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+                <div class="carousel">
+                  <div class="carousel-slide active">
+                    <i class="fa-solid fa-bell fa-3x" style="color: gold; margin-bottom: 20px;"></i>
+                    <h3>No Notifications</h3>
+                    <p>You have no new notifications at this time.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="three">
+            <a><i class="fa-solid fa-caret-down" style="color: white;"></i></a>
+            <div class="social-dropdown" id="socialDropdown">
+              <div class="social-grid">
+                <a href="https://google.com" target="_blank" class="social-item">
+                  <i class="fa-brands fa-google" style="color: #45c4b5;"></i>
+                  <span>Google</span>
+                </a>
+                <a href="https://spotify.com" target="_blank" class="social-item">
+                  <i class="fa-brands fa-spotify" style="color: #1ED760;"></i>
+                  <span>Spotify</span>
+                </a>
+                <a href="https://telegram.org" target="_blank" class="social-item">
+                  <i class="fa-brands fa-telegram" style="color: #74C0FC;"></i>
+                  <span>Telegram</span>
+                </a>
+                <a href="https://snapchat.com" target="_blank" class="social-item">
+                  <i class="fa-brands fa-snapchat" style="color: #FFD43B;"></i>
+                  <span>Snapchat</span>
+                </a>
+                <a href="https://tiktok.com" target="_blank" class="social-item">
+                  <i class="fa-brands fa-tiktok"></i>
+                  <span>Tiktok</span>
+                </a>
+                <a href="https://youtube.com" target="_blank" class="social-item">
+                  <i class="fa-brands fa-youtube" style="color: #FF0000;"></i>
+                  <span>Youtube</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-menu">
+            <a href="#" class="profile-icon">
+              <img class="photo" src="medium.jpg" alt="Profile" />
+            </a>
+            <ul class="profile-options">
+              <li><a href="profile.html">Profile</a></li>
+              <li><a href="setting.html">Settings</a></li>
+              <li><a href="help-center.html">Help</a></li>
+              <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <nav class="sidebar">
+        <ul class="sidebar-links">
+          <li><a class="nav-link-item active" href="index.html"><i class="fa-solid fa-house-chimney gap"></i>Overview</a></li>
+          <li><a class="nav-link-item" href="wallet.html"><i class="fa-solid fa-wallet ngap"></i>My Wallet</a></li>
+          <li><a class="nav-link-item" href="profile.html"><i class="fa-solid fa-user ngap"></i>Profile</a></li>
+          <li><a class="nav-link-item" href="setting.html"><i class="fa-solid fa-gear ngap"></i>Settings</a></li>
+          <li><a class="nav-link-item" href="help-center.html"><i class="fa-solid fa-question ngap"></i>Help Center</a></li>
+          <li><a class="nav-link-item" href="about.html">About Us</a></li>
+          <li class="sidebar-upgrade">
+            <img src="creditcard.jpg" alt="Upgrade" />
+            <a href="#" class="upgrade-btn">Upgrade</a>
+          </li>
+          <li><a class="nav-link-item" href="#">Logout</a></li>
+        </ul>
+      </nav>
+
+      <main class="main-content">
+        <div class="page-header">
+          <h1>Overview</h1>
+          <small>Hello <span id="userName">User</span>, welcome back!</small>
+        </div>
+
+        <div class="dashboard-overview">
+          <div class="card">
+            <div class="circle-decor"></div>
+            <div class="color">
+              <p class="name">Your Balance</p>
+            </div>
+            <h1 class="amount">$254,800</h1>
+            <p class="num">**** **** **** 2560</p>
+            <div class="last">
+              <p class="valid">Valid Date<br />12/2028</p>
+              <p class="hold">Card Holder<br /><span id="profileName">Loading...</span></p>
+            </div>
+          </div>
+
+          <div class="profile-summary">
+            <img src="medium.jpg" alt="User" class="user-avatar" />
+            <p><strong>Name:</strong> <span id="userName">Loading...</span></p>
+            <p><strong>Email:</strong> <a href="#" id="profileEmail">Loading...</a></p>
+            <p><strong>Phone:</strong> <a href="#" id="profilePhone">Loading...</a></p>
+          </div>
+
+          <div class="quick-actions">
+            <div class="action-btn">
+              <span class="icon"><i class="fa-regular fa-credit-card"></i></span>
+              <span class="label">Top up</span>
+            </div>
+            <div class="action-btn">
+              <span class="icon"><i class="fa-solid fa-barcode"></i></span>
+              <span class="label">Scan & Pay</span>
+            </div>
+            <div class="action-btn">
+              <span class="icon"><i class="fa-regular fa-paper-plane"></i></span>
+              <span class="label">Send</span>
+            </div>
+            <div class="action-btn">
+              <span class="icon"><i class="fa-solid fa-arrow-down"></i></span>
+              <span class="label">Request</span>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <footer class="footer">
+      <p>Copyright © Mini Finance 2025</p>
+    </footer>
+
+    <script>
+      document.querySelector(".three").addEventListener("click", function (event) {
+        event.stopPropagation();
+        const dropdown = document.getElementById("socialDropdown");
+        dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+      });
+
+      document.addEventListener("click", function (event) {
+        const dropdown = document.getElementById("socialDropdown");
+        if (dropdown && !dropdown.contains(event.target)) {
+          dropdown.style.display = "none";
+        }
+      });
+
+      function logout() {
+        localStorage.removeItem("user");
+        alert("Logged out successfully.");
+        window.location.href = "login.html";
+      }
+
+      function openModal() {
+        document.getElementById("notificationModal").style.display = "flex";
+      }
+
+      function closeModal() {
+        document.getElementById("notificationModal").style.display = "none";
+      }
+
+      window.onclick = function (event) {
+        const modal = document.getElementById("notificationModal");
+        if (event.target === modal) {
+          closeModal();
+        }
+      };
+
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      if (user) {
+        document.getElementById("userName").innerText = user.name || "User";
+        document.getElementById("profileName").innerText = user.name || "User";
+        document.getElementById("profileEmail").innerText = user.email || "email@example.com";
+        document.getElementById("profileEmail").href = `mailto:${user.email}`;
+        document.getElementById("profilePhone").innerText = user.phone || "Not set";
+        document.getElementById("profilePhone").href = `tel:${user.phone}`;
+
+        const profilePicTop = document.querySelector(".profile-icon img");
+        const profilePicSummary = document.querySelector(".user-avatar");
+
+        if (user.profileImg) {
+          if (profilePicTop) profilePicTop.src = user.profileImg;
+          if (profilePicSummary) profilePicSummary.src = user.profileImg;
+        }
+      } else {
+        alert("Please log in first!");
+        window.location.href = "login.html";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register / Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .box {
+      background: #fff;
+      padding: 30px 25px;
+      width: 100%;
+      max-width: 400px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #00796b;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 18px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      font-size: 1em;
+      background: #fafafa;
+    }
+
+    .form-group label {
+      position: absolute;
+      top: -8px;
+      left: 10px;
+      background: white;
+      padding: 0 4px;
+      font-size: 0.85em;
+      color: #00796b;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #00796b;
+      border: none;
+      border-radius: 6px;
+      font-size: 1em;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #004d40;
+    }
+
+    .toggle-link {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 0.9em;
+    }
+
+    .toggle-link a {
+      color: #00796b;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.8em;
+      margin: 4px 0 8px;
+      display: block;
+    }
+
+    #loginBox {
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 450px) {
+      body {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box" id="registerBox">
+    <h2>Register</h2>
+    <div class="form-group">
+      <label for="regName">Full Name</label>
+      <input type="text" id="regName" placeholder="John Doe" />
+      <span class="error" id="regNameErr"></span>
+    </div>
+    <div class="form-group">
+      <label for="regEmail">Email</label>
+      <input type="email" id="regEmail" placeholder="john@example.com" />
+      <span class="error" id="regEmailErr"></span>
+    </div>
+    <div class="form-group">
+      <label for="regPass">Password</label>
+      <input type="password" id="regPass" placeholder="********" />
+      <span class="error" id="regPassErr"></span>
+    </div>
+    <div class="form-group">
+      <label for="regPhone">Phone Number</label>
+      <input type="text" id="regPhone" placeholder="10-digit number" />
+      <span class="error" id="regPhoneErr"></span>
+    </div>
+    <div class="form-group">
+      <label for="regAddress">Address</label>
+      <textarea id="regAddress" placeholder="Your full address"></textarea>
+      <span class="error" id="regAddressErr"></span>
+    </div>
+    <div class="form-group">
+      <label for="regDOB">Date of Birth</label>
+      <input type="date" id="regDOB" />
+      <span class="error" id="regDOBErr"></span>
+    </div>
+    <button onclick="register()">Register</button>
+    <div class="toggle-link">
+      Already registered? <a href="#" onclick="showLogin()">Login here</a>
+    </div>
+  </div>
+
+  <div class="box" id="loginBox">
+    <h2>Login</h2>
+    <div class="form-group">
+      <label for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" placeholder="john@example.com" />
+      <span class="error" id="loginEmailErr"></span>
+    </div>
+    <div class="form-group">
+      <label for="loginPass">Password</label>
+      <input type="password" id="loginPass" placeholder="********" />
+      <span class="error" id="loginPassErr"></span>
+    </div>
+    <button onclick="login()">Login</button>
+    <div class="toggle-link">
+      Don't have an account? <a href="#" onclick="showRegister()">Register</a>
+    </div>
+  </div>
+
+  <script>
+    let user = {};
+
+    function clearErrors() {
+      document.querySelectorAll('.error').forEach(e => e.textContent = '');
+    }
+
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function validatePassword(pass) {
+      return pass.length >= 6;
+    }
+
+    function validatePhone(phone) {
+      return /^\d{10}$/.test(phone);
+    }
+
+    function validateDOB(dob) {
+      if (!dob) return false;
+      const today = new Date().toISOString().split("T")[0];
+      return dob < today;
+    }
+
+    function register() {
+      clearErrors();
+      const name = document.getElementById("regName").value.trim();
+      const email = document.getElementById("regEmail").value.trim();
+      const pass = document.getElementById("regPass").value;
+      const phone = document.getElementById("regPhone").value.trim();
+      const address = document.getElementById("regAddress").value.trim();
+      const dob = document.getElementById("regDOB").value;
+
+      let valid = true;
+
+      if (!name) {
+        document.getElementById("regNameErr").textContent = "Name is required.";
+        valid = false;
+      }
+      if (!email || !validateEmail(email)) {
+        document.getElementById("regEmailErr").textContent = "Valid email required.";
+        valid = false;
+      }
+      if (!pass || !validatePassword(pass)) {
+        document.getElementById("regPassErr").textContent = "Min 6 characters.";
+        valid = false;
+      }
+      if (!phone || !validatePhone(phone)) {
+        document.getElementById("regPhoneErr").textContent = "10-digit number required.";
+        valid = false;
+      }
+      if (!address) {
+        document.getElementById("regAddressErr").textContent = "Address is required.";
+        valid = false;
+      }
+      if (!dob || !validateDOB(dob)) {
+        document.getElementById("regDOBErr").textContent = "Valid DOB required.";
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      user = { name, email, pass, phone, address, dob };
+      localStorage.setItem("registeredUser", JSON.stringify(user));
+      alert("Registration successful! Please login.");
+      showLogin();
+    }
+
+    function login() {
+      clearErrors();
+      const email = document.getElementById("loginEmail").value.trim();
+      const pass = document.getElementById("loginPass").value;
+      let valid = true;
+
+      if (!email) {
+        document.getElementById("loginEmailErr").textContent = "Email is required.";
+        valid = false;
+      }
+      if (!pass) {
+        document.getElementById("loginPassErr").textContent = "Password is required.";
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      const stored = JSON.parse(localStorage.getItem("registeredUser"));
+      if (stored && email === stored.email && pass === stored.pass) {
+        localStorage.setItem("user", JSON.stringify(stored));
+        alert("Login successful!");
+        window.location.href = "index.html";
+      } else {
+        document.getElementById("loginPassErr").textContent = "Invalid credentials.";
+      }
+    }
+
+    function showLogin() {
+      clearErrors();
+      document.getElementById("registerBox").style.display = "none";
+      document.getElementById("loginBox").style.display = "block";
+    }
+
+    function showRegister() {
+      clearErrors();
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("registerBox").style.display = "block";
+    }
+  </script>
+</body>
+</html>
